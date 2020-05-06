@@ -1,7 +1,7 @@
 # PIMGento2
 
 > This version of PIMGento2 connector will not be maintained anymore by the end of 2018.
-> We kindly invite you to visit the Github repository of the new PIMGento2 (API) connector (https://github.com/Agence-DnD/PIMGento-2-API).
+> We kindly invite you to visit the Github repository of the new Akeneo connector for Magento 2 extension (https://github.com/akeneo/magento2-connector-community).
 
 PIMGento2 is a Magento 2 extension that allows you to import your catalog from Akeneo CSV files into Magento.
 
@@ -73,4 +73,4 @@ We have updated our roadmap. Just go [here](doc/important_stuff/roadmap.md).
 
 ## About us
 
-Founded by lovers of innovation and design, [Agence Dn'D](http://www.dnd.fr) assists companies for 11 years in the creation and development of customized digital (open source) solutions for web and E-commerce.
+Founded by lovers of innovation and design, [Agence Dn'D](https://www.dnd.fr) assists companies in the creation and development of customized digital (open source) solutions for web and E-commerce since 2004.

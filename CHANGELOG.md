@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [100.4.0] - 2019-07-18
+
+  * compatibility: Add Magento 2.3 compatibility
+  * fix: error on getAttribute function when empty
+
+## [100.3.4] - 2018-12-04
+
+  * fix: error on file deletion
+
 ## [100.3.3] - 2018-05-15
 
   * fix: Missing call for pimgento_family_attribute_relations table
