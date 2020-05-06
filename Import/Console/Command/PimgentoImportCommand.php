@@ -101,6 +101,8 @@ class PimgentoImportCommand extends Command
             }
         } catch (Exception $e) {
             $output->writeln($e->getMessage());
+            // Exception must be transfered to upper level for appropriate error reporting in parent commands if any
+            throw $e;
         }
     }
 

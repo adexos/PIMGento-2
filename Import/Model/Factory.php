@@ -80,6 +80,8 @@ class Factory extends DataObject implements FactoryInterface
             } catch (Exception $e) {
                 $this->unsetStatus();
                 $this->setMessage($e->getMessage());
+                // Exception must be transfered to upper level for appropriate error reporting in parent commands if any
+                throw $e;
             }
         }
 
