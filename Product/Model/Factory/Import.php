@@ -688,7 +688,18 @@ class Import extends Factory
             }
 
             if (!isset($values[0][$columnPrefix])) {
-                $values[0][$columnPrefix] = $column;
+                $keyFound = false;
+                if (preg_match('/[a-z]{2}_[A-Z]{2}/', $column)) {
+                    foreach ($values as $storeId => $columns) {
+                        if (isset($values[$storeId][$columnPrefix])) {
+                            $keyFound = true;
+                        }
+                    }
+                }
+
+                if (!$keyFound) {
+                    $values[0][$columnPrefix] = $column;
+                }
             }
         }
 
