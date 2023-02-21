@@ -14,5 +14,6 @@ class Config extends AbstractHelper
 {
     /** Config keys */
     const CONFIG_PIMGENTO_CATEGORY_UPDATE_URL_KEY = 'pimgento/category/update_url_key';
+    const CONFIG_PIMGENTO_CATEGORY_UPDATE_URL_KEY_FROM_FILE = 'pimgento/category/update_url_key_from_file';
     const CONFIG_CATALOG_SEO_CATEGORY_URL_SUFFIX  = 'catalog/seo/category_url_suffix';
 }

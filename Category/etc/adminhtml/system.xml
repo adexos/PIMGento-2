@@ -8,6 +8,11 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>Update URL key with category name for each import</comment>
                 </field>
+                <field id="update_url_key_from_file" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Update URL key from file</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Update URL key with column "url_key" for each import</comment>
+                </field>
             </group>
         </section>
     </system>

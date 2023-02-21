@@ -132,19 +132,24 @@ class Import extends Factory
                     'nullable' => false
                 ]);
 
-                $select = $connection->select()
-                    ->from($tmpTable, ['entity_id' => '_entity_id', 'name' => 'label-' . $local]);
-
                 $updateUrlKeyConfig = $this->_scopeConfig->getValue(Config::CONFIG_PIMGENTO_CATEGORY_UPDATE_URL_KEY);
+                $updateUrlKeyFileConfig = $this->_scopeConfig->getValue(Config::CONFIG_PIMGENTO_CATEGORY_UPDATE_URL_KEY_FROM_FILE);
 
-                if (!$updateUrlKeyConfig) {
+                $columns = ['entity_id' => '_entity_id', 'name' => 'label-' . $local];
+                if ($updateUrlKeyFileConfig) {
+                    $columns = ['entity_id' => '_entity_id', 'url_key' => 'url_key', 'name' => 'label-' . $local];
+                }
+
+                $select = $connection->select()->from($tmpTable, $columns);
+
+                if (!$updateUrlKeyConfig && !$updateUrlKeyFileConfig) {
                     $select->where('_is_new = ?', 1);
                 }
 
                 $query = $connection->query($select);
 
                 while (($row = $query->fetch())) {
-                    $urlKey = $this->_category->formatUrlKey($row['name']);
+                    $urlKey = $this->_category->formatUrlKey($row[$updateUrlKeyFileConfig ? 'url_key' : 'name']);
 
                     $finalKey = $urlKey;
                     $increment = 1;
@@ -159,7 +164,7 @@ class Import extends Factory
                     );
                 }
 
-                if (!$updateUrlKeyConfig) {
+                if (!$updateUrlKeyConfig && !$updateUrlKeyFileConfig) {
                     $connection->update(
                         $tmpTable,
                         ['url_key-' . $local => \Pimgento\Entities\Model\ResourceModel\Entities::IGNORE_VALUE],
