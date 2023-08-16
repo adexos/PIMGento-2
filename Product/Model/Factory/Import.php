@@ -750,8 +750,13 @@ class Import extends Factory
             $valuesSuperLink = [];
             while (($row = $query->fetch())) {
                 $attributes = explode(',', $row['_axis']);
-
                 $position = 0;
+
+                $condition = ['product_id =?' => $row['_entity_id']];
+                $connection->delete(
+                    $resource->getTable('catalog_product_super_attribute'),
+                    $condition
+                );
 
                 foreach ($attributes as $id) {
                     if (!is_numeric($id)) {
