@@ -5,6 +5,7 @@ namespace Pimgento\Import\Console\Command;
 use \Magento\Framework\App\Area;
 use \Magento\Framework\App\State;
 use \Magento\Framework\Console\Cli;
+use Magento\Framework\Exception\LocalizedException;
 use \Symfony\Component\Console\Command\Command;
 use \Symfony\Component\Console\Input\InputInterface;
 use \Symfony\Component\Console\Output\OutputInterface;
@@ -14,27 +15,17 @@ use \Exception;
 
 class PimgentoImportCommand extends Command
 {
-
-    const IMPORT_CODE = 'code';
-
-    const IMPORT_FILE = 'file';
-
-    /**
-     * @var \Pimgento\Import\Model\Import
-     */
-    protected $_import;
-
-    /**
-     * @var \Magento\Framework\App\State
-     */
-    protected $_appState;
+    public const IMPORT_CODE = 'code';
+    public const IMPORT_FILE = 'file';
+    protected ImportModel $_import;
+    protected State $_appState;
 
     /**
      * PimgentoImportCommand constructor.
      *
-     * @param \Pimgento\Import\Model\Import $import
-     * @param \Magento\Framework\App\State $appState
-     * @param null $name
+     * @param ImportModel $import
+     * @param State       $appState
+     * @param null        $name
      */
     public function __construct(ImportModel $import, State $appState, $name = null)
     {
@@ -61,7 +52,7 @@ class PimgentoImportCommand extends Command
     {
         try {
             $this->_appState->setAreaCode(Area::AREA_ADMINHTML);
-        } catch (\Magento\Framework\Exception\LocalizedException $e) {
+        } catch (LocalizedException $e) {
             $output->writeln('Area code already set');
         }
 
@@ -77,14 +68,7 @@ class PimgentoImportCommand extends Command
         return Cli::RETURN_SUCCESS;
     }
 
-    /**
-     * Run import
-     *
-     * @param string $code
-     * @param string $file
-     * @param OutputInterface $output
-     */
-    protected function _import($code, $file, OutputInterface $output)
+    protected function _import(string $code, string $file, OutputInterface $output): void
     {
         try {
             $import = $this->_import->load($code);
@@ -107,12 +91,7 @@ class PimgentoImportCommand extends Command
         }
     }
 
-    /**
-     * Print command usage
-     *
-     * @param OutputInterface $output
-     */
-    protected function _usage(OutputInterface $output)
+    protected function _usage(OutputInterface $output): void
     {
         $imports = $this->_import->getCollection();
 
@@ -138,5 +117,4 @@ class PimgentoImportCommand extends Command
             );
         }
     }
-
 }
