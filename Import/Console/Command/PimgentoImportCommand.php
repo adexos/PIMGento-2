@@ -4,6 +4,7 @@ namespace Pimgento\Import\Console\Command;
 
 use \Magento\Framework\App\Area;
 use \Magento\Framework\App\State;
+use \Magento\Framework\Console\Cli;
 use \Symfony\Component\Console\Command\Command;
 use \Symfony\Component\Console\Input\InputInterface;
 use \Symfony\Component\Console\Output\OutputInterface;
@@ -72,6 +73,8 @@ class PimgentoImportCommand extends Command
         } else {
             $this->_import($code, $file, $output);
         }
+
+        return Cli::RETURN_SUCCESS;
     }
 
     /**
