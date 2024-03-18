@@ -889,27 +889,62 @@ class Import extends Factory
         $resource = $this->_entities->getResource();
         $connection = $resource->getConnection();
         $tmpTable = $this->_entities->getTableName($this->getCode());
-
         $websites = $this->_helperConfig->getStores('website_id');
 
-        foreach ($websites as $websiteId => $affected) {
-            if ($websiteId == 0) {
-                continue;
-            }
+        if ($connection->tableColumnExists($tmpTable, 'website_id')) {
+            $query = $connection->select()
+                ->from($tmpTable, array(
+                    'product_id' => '_entity_id',
+                ))
+                ->distinct();
+
+            $productsIds = $connection->fetchCol($query);
+            $productsIds = sprintf('%s%s%s', "'", implode("','", $productsIds), "'");
+
+            $connection->delete(
+                $resource->getTable('catalog_product_website'),
+                sprintf('product_id IN (%s)', $productsIds)
+            );
 
             $select = $connection->select()
                 ->from(
                     $tmpTable,
                     array(
                         'product_id' => '_entity_id',
-                        'website_id' => new Expr($websiteId)
+                        'website_id' => 'website_id'
                     )
                 );
             $connection->query(
                 $connection->insertFromSelect(
-                    $select, $resource->getTable('catalog_product_website'), array('product_id', 'website_id'),AdapterInterface::INSERT_ON_DUPLICATE
+                    $select,
+                    $resource->getTable('catalog_product_website'),
+                    array('product_id', 'website_id'),
+                    AdapterInterface::INSERT_ON_DUPLICATE
                 )
             );
+        } else {
+            foreach ($websites as $websiteId => $affected) {
+                if ($websiteId == 0) {
+                    continue;
+                }
+
+                $select = $connection->select()
+                    ->from(
+                        $tmpTable,
+                        array(
+                            'product_id' => '_entity_id',
+                            'website_id' => new Expr($websiteId)
+                        )
+                    );
+                $connection->query(
+                    $connection->insertFromSelect(
+                        $select,
+                        $resource->getTable('catalog_product_website'),
+                        array('product_id', 'website_id'),
+                        AdapterInterface::INSERT_ON_DUPLICATE
+                    )
+                );
+            }
         }
     }
 
