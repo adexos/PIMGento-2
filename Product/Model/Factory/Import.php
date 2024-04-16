@@ -322,7 +322,8 @@ class Import extends Factory
                 '_type_id' => new Expr('"configurable"'),
                 '_options_container' => new Expr('"container1"'),
                 '_status' => 'e._status',
-                '_axis' => 'v.axis'
+                '_axis' => 'v.axis',
+                'website_id' => 'v.website_id'
             );
 
             if ($connection->tableColumnExists($tmpTable, 'family')) {
