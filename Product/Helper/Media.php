@@ -108,15 +108,15 @@ class Media extends AbstractHelper
         }
 
         // build import folder
-        $importFolder = $currentImportFolder.'/';
+        $importFolder = $currentImportFolder . '/';
         $value = trim($this->scopeConfig->getValue('pimgento/image/path'));
         if ($value) {
-            $importFolder .= $value.'/';
+            $importFolder .= $value . '/';
         }
 
         $value = trim($this->scopeConfig->getValue('pimgento/image/absolute_path'));
         if ($value) {
-            $importFolder .= $value.'/';
+            $importFolder = $value . '/';
         }
 
         $this->imageConfig['import_folder'] = str_replace('//', '/', $importFolder);
