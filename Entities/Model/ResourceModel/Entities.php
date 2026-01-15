@@ -240,7 +240,7 @@ class Entities extends AbstractDb
 
         $connection = $this->getConnection();
 
-        while (($csvLine = fgetcsv($fileHandle, null, $fieldsTerminated, $fieldsEnclosure)) !== false) {
+        while (($csvLine = fgetcsv($fileHandle, null, $fieldsTerminated, $fieldsEnclosure, '\\')) !== false) {
             $rowCount++;
 
             if ($rowCount == 1) {
